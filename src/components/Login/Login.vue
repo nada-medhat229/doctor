@@ -111,7 +111,7 @@ export default {
 
           localStorage.setItem("user-data", JSON.stringify(result.config.url));
           // redirect page
-          this.redirectTo({ val: "Home" });
+          this.redirectTo({ val: "Doctor" });
         } else {
           this.errormessage = "not found user";
         }
