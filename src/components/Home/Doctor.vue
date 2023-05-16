@@ -34,6 +34,13 @@ export default {
     };
   },
   async mounted() {
+    let user = localStorage.getItem("user-data");
+    if (!user) {
+      this.redirectTo({ val: "Login" });
+    } else {
+      this.userName = JSON.parse(user).name;
+      this.userId = JSON.parse(user).id;
+    }
     let result = await axios.get(`https://dummyjson.com/users`);
     if (result.status == 200 && result.data.users.length > 0) {
       this.listoflocation = result.data.users;

@@ -90,7 +90,7 @@ export default {
   mounted() {
     let user = localStorage.getItem("user-data");
     if (user) {
-      this.redirectTo({ val: "Home" });
+      this.redirectTo({ val: "Doctor" });
     }
   },
   methods: {
