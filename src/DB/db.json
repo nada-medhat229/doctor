@@ -1,0 +1,26 @@
+{
+  "users": [
+    {
+      "name": "nada",
+      "email": "admin@admin.con",
+      "password": "1234567899",
+      "id": 1
+    }
+  ],
+  "Location": [
+    {
+      "name": "Ad asperiores sunt i",
+      "phone": "+1 (967) 455-1915",
+      "address": "Eius doloribus ipsam",
+      "userId": 1,
+      "id": 2
+    },
+    {
+      "name": "asperiores",
+      "phone": "+1 (967) 455-1915",
+      "address": " doloribus ",
+      "userId": 1,
+      "id": 3
+    }
+  ]
+}
