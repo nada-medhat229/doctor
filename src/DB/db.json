@@ -2,24 +2,37 @@
   "users": [
     {
       "name": "nada",
-      "email": "admin@admin.con",
+      "email": "admin@admin.com",
       "password": "1234567899",
       "id": 1
     }
   ],
-  "Location": [
+  "Doctors": [
     {
-      "name": "Ad asperiores sunt i",
-      "phone": "+1 (967) 455-1915",
-      "address": "Eius doloribus ipsam",
-      "userId": 1,
       "id": 2
     },
     {
-      "name": "asperiores",
-      "phone": "+1 (967) 455-1915",
-      "address": " doloribus ",
+      "name": "Dolores omnis volupt",
+      "phone": "+1 (871) 533-6066",
       "userId": 1,
+      "id": 6
+    },
+    {
+      "name": "Suscipit aliquip vol",
+      "phone": "+1 (377) 165-1376",
+      "userId": 1,
+      "id": 7
+    }
+  ],
+  "Patients": [
+    {
+      "name": "Dolorssssssssssssss",
+      "phone": "+1066",
+      "id": 1
+    },
+    {
+      "name": "Culphhhhh",
+      "phone": "+1 (536) 175-3493",
       "id": 3
     }
   ]

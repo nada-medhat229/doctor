@@ -57,11 +57,13 @@ export default {
   async mounted() {
     let user = localStorage.getItem("user-data");
     if (!user) {
-      this.redirectTo({ val: "signup" });
+      this.redirectTo({ val: "Login" });
     } else {
-      let result = await axios.get(`https://dummyjson.com/users`);
+      let result = await axios.get(
+        `http://localhost:3000/Doctor?userid=${this.userId}`
+      );
       for (let i = 0; i < result.data.users.length; i++) {
-        this.allrest.push(result.data.users[i]);
+        this.allrest.push(result.data[i].id);
       }
     }
   },
@@ -71,7 +73,7 @@ export default {
       let allresult = [];
       for (let i = 0; i < this.allrest.length; i++) {
         let result = await axios.delete(
-          `https://dummyjson.com/users/${this.allrest[i].id}`
+          `http://localhost:3000/Doctor?userid=${this.allrest[i]}`
         );
         if (result.status == 200) {
           allresult.push(true);

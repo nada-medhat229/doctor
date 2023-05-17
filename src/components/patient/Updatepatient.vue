@@ -103,13 +103,15 @@ export default {
     ...mapActions(["redirectTo"]),
     async cancurruntuserAcces() {
       let result = await axios.get(
-        `https://jsonplaceholder.typicode.com/users/${this.resetId}`
+        `http://localhost:3000/Patients?id=${this.resetId}&userid=${this.userId}`
       );
 
       if (result.status == 200) {
         this.doctorsData = result.data;
-        this.state.name = this.doctorsData.name;
-        this.state.phone = this.doctorsData.phone;
+        this.state.name = this.doctorsData[0].name;
+        this.state.phone = this.doctorsData[0].phone;
+      } else {
+        this.redirectTo({ val: "Patients" });
       }
     },
     async updatedoctors() {
@@ -117,12 +119,17 @@ export default {
       if (!this.v$.$error) {
         this.successmessage = "Good Job";
         let results = await axios.put(
-          `https://jsonplaceholder.typicode.com/users/${this.resetId}`
+          `http://localhost:3000/Patients/${this.resetId}`,
+          {
+            name: this.state.name,
+            phone: this.state.phone,
+            userId: this.userId,
+          }
         );
         console.log(results);
         if (results.status == 200) {
           this.errormessage = "";
-          this.successmessage = "Updated doctors";
+          this.successmessage = "Updated Patients";
           setTimeout(() => {
             this.redirectTo({ val: "Patients" });
           }, 2000);

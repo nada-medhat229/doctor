@@ -95,20 +95,28 @@ export default {
     };
   },
   mounted() {
-    this.resetId = this.$route.params.resetId;
-    this.cancurruntuserAcces();
+    let user = localStorage.getItem("user-data");
+    if (!user) {
+      this.redirectTo({ val: "Login" });
+    } else {
+      this.userId = JSON.parse(user).id;
+      this.resetId = this.$route.params.resetId;
+      this.cancurruntuserAcces();
+    }
   },
   methods: {
     ...mapActions(["redirectTo"]),
     async cancurruntuserAcces() {
       let result = await axios.get(
-        `https://dummyjson.com/users/${this.resetId}`
+        `http://localhost:3000/Doctors?id=${this.resetId}&userid=${this.userId}`
       );
-
+      console.log(result);
       if (result.status == 200) {
         this.doctorsData = result.data;
-        this.state.name = this.doctorsData.firstName;
-        this.state.phone = this.doctorsData.phone;
+        this.state.name = this.doctorsData[0].name;
+        this.state.phone = this.doctorsData[0].phone;
+      } else {
+        this.redirectTo({ val: "Doctor" });
       }
     },
     async updatedoctors() {
@@ -116,7 +124,12 @@ export default {
       if (!this.v$.$error) {
         this.successmessage = "Good Job";
         let results = await axios.put(
-          `https://dummyjson.com/users/${this.resetId}`
+          `http://localhost:3000/Doctors/${this.resetId}`,
+          {
+            name: this.state.name,
+            phone: this.state.phone,
+            userId: this.userId,
+          }
         );
         console.log(results);
         if (results.status == 200) {

@@ -108,7 +108,7 @@ export default {
     },
     async deleteReset(userId) {
       let result = await axios.delete(
-        `https://jsonplaceholder.typicode.com/users/${userId}`
+        `http://localhost:3000/Patients/${userId}`
       );
       console.log(result);
       if (result.status == 200) {

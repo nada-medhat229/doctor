@@ -31,7 +31,16 @@ export default {
     };
   },
   async mounted() {
-    let result = await axios.get(`https://jsonplaceholder.typicode.com/users`);
+    let user = localStorage.getItem("user-data");
+    if (!user) {
+      this.redirectTo({ val: "Login" });
+    } else {
+      this.userName = JSON.parse(user).name;
+      this.userId = JSON.parse(user).id;
+    }
+    let result = await axios.get(
+      `http://localhost:3000/Patients?userId=${this.userId}`
+    );
     if (result.status == 200 && result.data.length > 0) {
       this.listoflocation = result.data;
     }

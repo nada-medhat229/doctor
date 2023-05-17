@@ -74,7 +74,6 @@ export default {
     const state = reactive({
       name: "",
       phone: "",
-      address: "",
     });
     const rules = computed(() => {
       return {
@@ -95,6 +94,14 @@ export default {
       successmessage: "",
     };
   },
+  mounted() {
+    let user = localStorage.getItem("user-data");
+    if (!user) {
+      this.redirectTo({ val: "Login" });
+    } else {
+      this.userId = JSON.parse(user).id;
+    }
+  },
   methods: {
     ...mapActions(["redirectTo"]),
     async addlocation() {
@@ -102,15 +109,13 @@ export default {
       if (!this.v$.$error) {
         this.successmessage = "Good Job";
 
-        let result = await axios.post(
-          "https://jsonplaceholder.typicode.com/users",
-          {
-            name: this.state.name,
-            phone: this.state.phone,
-            userId: this.userId,
-          }
-        );
-        if (result.status == 200) {
+        let result = await axios.post("http://localhost:3000/Patients", {
+          name: this.state.name,
+          phone: this.state.phone,
+          userId: this.userId,
+        });
+        console.log(result);
+        if (result.status == 201) {
           this.errormessage = "";
           this.successmessage = "Thanks For You";
           setTimeout(() => {

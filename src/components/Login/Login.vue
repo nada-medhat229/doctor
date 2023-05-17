@@ -104,12 +104,12 @@ export default {
       if (!this.v$.$error) {
         console.log("not error in validator");
         let result = await axios.get(
-          `https://dummyjson.com?email=${this.state.email}?pass=${this.state.password}`
+          `http://localhost:3000/users?email=${this.state.email}&pass=${this.state.password}`
         );
+        console.log(result);
         if (result.status == 200 && result.data.length > 0) {
           console.log("logged");
-
-          localStorage.setItem("user-data", JSON.stringify(result.config.url));
+          localStorage.setItem("user-data", JSON.stringify(result.data[0]));
           // redirect page
           this.redirectTo({ val: "Doctor" });
         } else {

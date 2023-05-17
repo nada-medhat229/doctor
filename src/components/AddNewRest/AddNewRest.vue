@@ -62,7 +62,7 @@
 import useVuelidate from "@vuelidate/core";
 import Navbar from "@/components/Navbar/Navbar.vue";
 import { required } from "@vuelidate/validators";
-// import axios from "axios";
+import axios from "axios";
 import { reactive, computed } from "vue";
 import { mapActions } from "vuex";
 export default {
@@ -74,7 +74,6 @@ export default {
     const state = reactive({
       name: "",
       phone: "",
-      address: "",
     });
     const rules = computed(() => {
       return {
@@ -95,48 +94,41 @@ export default {
       successmessage: "",
     };
   },
+  mounted() {
+    let user = localStorage.getItem("user-data");
+    if (!user) {
+      this.redirectTo({ val: "Login" });
+    } else {
+      this.userId = JSON.parse(user).id;
+    }
+  },
   methods: {
     ...mapActions(["redirectTo"]),
-    // async addlocation() {
-    //   this.v$.$validate();
-    //   if (!this.v$.$error) {
-    //     this.successmessage = "Good Job";
-
-    //     let result = await axios.post("https://dummyjson.com/users/add", {
-    //       name: this.state.name,
-    //       phone: this.state.phone,
-    //       userId: this.userId,
-    //     });
-    //     if (result.status == 200) {
-    //       this.errormessage = "";
-    //       this.successmessage = "Thanks For You";
-    //       setTimeout(() => {
-    //         this.redirectTo({ val: "Doctor" });
-    //       }, 2000);
-    //     } else {
-    //       this.successmessage = "";
-    //       this.errormessage = "CHeck Your Data";
-    //     }
-    //   } else {
-    //     this.successmessage = "";
-    //     this.errormessage = "Check Your Data All Feild Must Be Complete";
-    //   }
-    // },
     async addlocation() {
-      fetch("https://dummyjson.com/users/add", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          firstName: this.state.name,
+      this.v$.$validate();
+      if (!this.v$.$error) {
+        this.successmessage = "Good Job";
+
+        let result = await axios.post("http://localhost:3000/Doctors", {
+          name: this.state.name,
           phone: this.state.phone,
-        }),
-      })
-        .then((res) => res.json())
-        .then(
+          userId: this.userId,
+        });
+        console.log(result);
+        if (result.status == 201) {
+          this.errormessage = "";
+          this.successmessage = "Thanks For You";
           setTimeout(() => {
             this.redirectTo({ val: "Doctor" });
-          }, 2000)
-        );
+          }, 2000);
+        } else {
+          this.successmessage = "";
+          this.errormessage = "CHeck Your Data";
+        }
+      } else {
+        this.successmessage = "";
+        this.errormessage = "Check Your Data All Feild Must Be Complete";
+      }
     },
   },
 };

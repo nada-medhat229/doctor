@@ -14,7 +14,7 @@
     </thead>
     <tbody>
       <tr v-for="(rest, i) in allRest" :key="i">
-        <th scope="row">{{ rest.firstName }}</th>
+        <th scope="row">{{ rest.name }}</th>
         <td>{{ rest.phone }}</td>
         <td>
           <!-- <router-link
@@ -107,7 +107,9 @@ export default {
       this.isModal = false;
     },
     async deleteReset(userId) {
-      let result = await axios.delete(`https://dummyjson.com/users/${userId}`);
+      let result = await axios.delete(
+        `http://localhost:3000/Doctors/${userId}`
+      );
       console.log(result);
       if (result.status == 200) {
         this.redirectTo({ val: "Loading" });
